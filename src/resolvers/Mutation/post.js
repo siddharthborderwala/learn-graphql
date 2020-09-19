@@ -14,6 +14,8 @@ const postMutations = {
             id: userId,
           },
         },
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       },
     }, info);
   },
@@ -65,7 +67,10 @@ const postMutations = {
       where: {
         id: args.id,
       },
-      data: args.data,
+      data: {
+        ...args.data,
+        updatedAt: new Date().toISOString(),
+      },
     }, info);
   },
 };

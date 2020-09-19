@@ -12,6 +12,8 @@ const userMutations = {
       data: {
         ...args.data,
         password,
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       },
     });
 
@@ -55,7 +57,13 @@ const userMutations = {
     }
 
     return prisma.mutation.updateUser(
-      { where: { id: userId }, data: args.data },
+      {
+        where: { id: userId },
+        data: {
+          ...args.data,
+          updatedAt: new Date().toISOString(),
+        },
+      },
       info,
     );
   },

@@ -23,6 +23,8 @@ const commentMutations = {
             id: args.data.post,
           },
         },
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
       },
     }, info);
   },
@@ -60,7 +62,10 @@ const commentMutations = {
       where: {
         id: args.id,
       },
-      data: args.data,
+      data: {
+        ...args.data,
+        updatedAt: new Date().toISOString(),
+      },
     }, info);
   },
 };
