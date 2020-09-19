@@ -1,0 +1,31 @@
+{
+  "name": "prisma",
+  "version": "1.0.0",
+  "description": "GraphQL with Prisma",
+  "main": "index.js",
+  "private": "true",
+  "scripts": {
+    "start": "nodemon src/index.js --ext js,graphql --exec babel-node",
+    "get-schema": "graphql get-schema -p prisma"
+  },
+  "author": "Siddharth Borderwala",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.10.5",
+    "@babel/core": "^7.11.4",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.0",
+    "@graphql-cli/codegen": "^1.17.8",
+    "@graphql-codegen/cli": "^1.17.8",
+    "@graphql-codegen/schema-ast": "^1.17.8",
+    "graphql-cli": "^4.0.0",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.10.4",
+    "bcryptjs": "^2.4.3",
+    "graphql-yoga": "^1.18.3",
+    "jsonwebtoken": "^8.5.1",
+    "prisma-binding": "^2.3.16"
+  }
+}
