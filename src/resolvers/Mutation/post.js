@@ -44,9 +44,24 @@ const postMutations = {
       },
     });
 
-    if (!postExists) throw new Error("Not authorized");
+    if (!postExists) throw new Error("Unable to update post");
 
-    return prisma.mutation.deletePost({
+    const isPublished = prisma.exists.Post({
+      id: args.id,
+      published: true,
+    });
+
+    if (isPublished && !args.data.published) {
+      await prisma.mutation.deleteManyComments({
+        where: {
+          post: {
+            id: args.id,
+          },
+        },
+      });
+    }
+
+    return prisma.mutation.updatePost({
       where: {
         id: args.id,
       },

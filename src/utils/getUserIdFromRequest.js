@@ -2,7 +2,9 @@ import jwt from "jsonwebtoken";
 import { jwtSecret } from "../resolvers/Mutation";
 
 const getUserIdFromRequest = (request, requireAuth = true) => {
-  const header = request.request.headers.authorization;
+  const header = request.request
+    ? request.request.headers.authorization
+    : request.connection.context.Authorization;
 
   if (header) {
     const token = header.replace("Bearer ", "");

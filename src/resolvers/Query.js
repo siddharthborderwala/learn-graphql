@@ -9,28 +9,54 @@ const Query = {
           {
             name_contains: args.query,
           },
-          {
-            email_contains: args.query,
-          },
         ],
       };
     }
 
     return prisma.query.users(opArgs, info);
   },
-  posts(parent, args, { prisma }, info) {
-    const opArgs = {};
+  myPosts(parent, args, { prisma, request }, info) {
+    const userId = getUserIdFromRequest(request);
+
+    if (!userId) throw new Error("User not found");
+
+    const opArgs = {
+      where: {
+        author: {
+          id: userId,
+        },
+      },
+    };
+
     if (args.query) {
-      opArgs.where = {
-        OR: [
-          {
-            title_contains: args.query,
-          },
-          {
-            body_contains: args.query,
-          },
-        ],
-      };
+      opArgs.where.OR = [
+        {
+          title_contains: args.query,
+        },
+        {
+          body_contains: args.query,
+        },
+      ];
+    }
+
+    return prisma.query.posts(opArgs, info);
+  },
+  posts(parent, args, { prisma }, info) {
+    const opArgs = {
+      where: {
+        published: true,
+      },
+    };
+
+    if (args.query) {
+      opArgs.where.OR = [
+        {
+          title_contains: args.query,
+        },
+        {
+          body_contains: args.query,
+        },
+      ];
     }
 
     return prisma.query.posts(opArgs, info);

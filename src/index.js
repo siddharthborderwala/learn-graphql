@@ -1,7 +1,7 @@
 import { GraphQLServer } from "graphql-yoga";
 
 import prisma from "./prisma";
-import resolvers from "./resolvers";
+import resolvers, { fragmentReplacements } from "./resolvers";
 
 const server = new GraphQLServer({
   typeDefs: "./src/schema.graphql",
@@ -10,6 +10,7 @@ const server = new GraphQLServer({
     prisma,
     request,
   }),
+  fragmentReplacements,
 });
 
 server.start().then((value) => {

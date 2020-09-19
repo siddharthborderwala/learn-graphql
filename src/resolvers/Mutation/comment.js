@@ -3,6 +3,12 @@ import getUserIdFromRequest from "../../utils/getUserIdFromRequest";
 const commentMutations = {
   async createComment(parent, args, { prisma, request }, info) {
     const userId = getUserIdFromRequest(request);
+    const postPublished = prisma.exists.Post({
+      id: args.data.post,
+      published: true,
+    });
+
+    if (!postPublished) throw new Error("Unable to find post");
 
     return prisma.mutation.createComment({
       data: {
